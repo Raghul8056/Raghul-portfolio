@@ -171,9 +171,10 @@ const TextType: React.FC<TextTypeProps> = ({
   const shouldHideCursor =
     hideCursorWhileTyping && (currentCharIndex < (textArray[currentTextIndex]?.length || 0) || isDeleting);
 
+  const Tag = Component as any;
+
   return (
-    {/* @ts-ignore */}
-    <Component
+    <Tag
       ref={containerRef}
       className={`text-type ${className}`}
       {...props}
@@ -189,7 +190,7 @@ const TextType: React.FC<TextTypeProps> = ({
           {cursorCharacter}
         </span>
       )}
-    </Component>
+    </Tag>
   );
 };
 
