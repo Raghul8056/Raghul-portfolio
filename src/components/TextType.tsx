@@ -172,6 +172,7 @@ const TextType: React.FC<TextTypeProps> = ({
     hideCursorWhileTyping && (currentCharIndex < (textArray[currentTextIndex]?.length || 0) || isDeleting);
 
   return (
+    {/* @ts-ignore */}
     <Component
       ref={containerRef}
       className={`text-type ${className}`}

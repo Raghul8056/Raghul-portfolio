@@ -116,17 +116,17 @@ function Band({
   lanyardImage = null,
   lanyardWidth = 1
 }: any) {
-  const band = useRef<any>(),
-    fixed = useRef<any>(),
-    j1 = useRef<any>(),
-    j2 = useRef<any>(),
-    j3 = useRef<any>(),
-    card = useRef<any>();
+  const band = useRef<any>(null),
+    fixed = useRef<any>(null),
+    j1 = useRef<any>(null),
+    j2 = useRef<any>(null),
+    j3 = useRef<any>(null),
+    card = useRef<any>(null);
   const vec = new THREE.Vector3(),
     ang = new THREE.Vector3(),
     rot = new THREE.Vector3(),
     dir = new THREE.Vector3();
-  const segmentProps = { type: 'dynamic' as const, canSleep: true, colliders: false, angularDamping: 4, linearDamping: 4 };
+  const segmentProps = { type: 'dynamic' as const, canSleep: true, colliders: false as any, angularDamping: 4, linearDamping: 4 };
   const { nodes, materials } = useGLTF(cardGLB) as any;
   const texture = useTexture(lanyardImage || lanyard);
   // useTexture must be called unconditionally; use a blank pixel when an image
@@ -170,8 +170,8 @@ function Band({
       ctx.restore();
     };
 
-    if (frontImage && frontTex.image) drawFitted(frontTex.image, FRONT_UV_RECT);
-    if (backImage && backTex.image) drawFitted(backTex.image, BACK_UV_RECT);
+    if (frontImage && (frontTex as any).image) drawFitted((frontTex as any).image, FRONT_UV_RECT);
+    if (backImage && (backTex as any).image) drawFitted((backTex as any).image, BACK_UV_RECT);
 
     const composite = new THREE.CanvasTexture(canvas);
     composite.colorSpace = THREE.SRGBColorSpace;
@@ -232,7 +232,7 @@ function Band({
   });
 
   (curve as any).curveType = 'chordal';
-  texture.wrapS = texture.wrapT = THREE.RepeatWrapping;
+  (texture as any).wrapS = (texture as any).wrapT = THREE.RepeatWrapping;
 
   return (
     <>
@@ -254,9 +254,9 @@ function Band({
             position={[0, -1.2, -0.05]}
             onPointerOver={() => hover(true)}
             onPointerOut={() => hover(false)}
-            onPointerUp={e => (e.target.releasePointerCapture(e.pointerId), drag(false))}
+            onPointerUp={e => ((e.target as any).releasePointerCapture(e.pointerId), drag(false))}
             onPointerDown={e => (
-              e.target.setPointerCapture(e.pointerId),
+              (e.target as any).setPointerCapture(e.pointerId),
               drag(new THREE.Vector3().copy(e.point).sub(vec.copy(card.current.translation())))
             )}
           >
@@ -276,7 +276,9 @@ function Band({
         </RigidBody>
       </group>
       <mesh ref={band}>
+        {/* @ts-ignore */}
         <meshLineGeometry />
+        {/* @ts-ignore */}
         <meshLineMaterial
           color="white"
           depthTest={false}
