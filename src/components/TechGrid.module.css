@@ -1,0 +1,34 @@
+.section {
+  background: var(--ink);
+}
+
+.grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 2px;
+  background: var(--ink);
+}
+
+.cell {
+  aspect-ratio: 16 / 10;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: var(--font-display);
+  font-weight: 400;
+  font-size: clamp(1.15rem, 2vw, 1.6rem);
+  text-align: center;
+  padding: 1rem;
+  letter-spacing: -0.01em;
+  transition: transform 0.25s ease;
+}
+
+.cell:hover {
+  transform: scale(1.02);
+}
+
+@media (max-width: 700px) {
+  .grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}

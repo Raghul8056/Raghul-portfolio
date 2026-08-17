@@ -1,0 +1,74 @@
+.section {
+  position: relative;
+  background: var(--ink);
+  padding: clamp(4rem, 10vw, 7rem) 0;
+  overflow: hidden;
+}
+
+.glow {
+  position: absolute;
+  top: -10%;
+  right: -5%;
+  width: 45%;
+  height: 130%;
+  background: radial-gradient(
+    ellipse at center,
+    rgba(var(--accent-rgb), 0.55),
+    rgba(var(--accent-rgb), 0.15) 45%,
+    transparent 70%
+  );
+  filter: blur(60px);
+  transform: rotate(-18deg);
+  pointer-events: none;
+}
+
+.inner {
+  position: relative;
+  z-index: 1;
+}
+
+.title {
+  font-family: var(--font-display);
+  font-weight: 400;
+  font-size: clamp(2.75rem, 8vw, 5.5rem);
+  color: var(--text-primary);
+  line-height: 1;
+  margin-bottom: 1.25rem;
+}
+
+.desc {
+  color: var(--text-secondary);
+  font-size: 1rem;
+  line-height: 1.7;
+  max-width: 420px;
+  margin-bottom: 2.5rem;
+  text-wrap: pretty;
+}
+
+.list {
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: 0.6rem;
+  max-width: 480px;
+}
+
+.list li {
+  color: var(--text-primary);
+  font-size: 1rem;
+}
+
+.listIndex {
+  color: var(--text-muted);
+  margin-right: 0.6rem;
+  font-family: var(--font-mono);
+}
+
+.listLabel {
+  font-weight: 700;
+}
+
+.listSuffix {
+  color: var(--text-secondary);
+  font-weight: 400;
+}

@@ -1,0 +1,949 @@
+.heroContainer {
+  position: relative;
+  background: #ffffff;
+  overflow: hidden;
+  min-height: 100vh;
+  min-height: 100svh;
+  width: 100%;
+  color: #0a0a0a;
+}
+
+/* Soft pink ambient glows */
+.ambientGlow {
+  position: absolute;
+  border-radius: 50%;
+  filter: blur(90px);
+  pointer-events: none;
+  z-index: 0;
+}
+
+.glowTopRight {
+  top: -100px;
+  right: -100px;
+  width: 450px;
+  height: 450px;
+  background: radial-gradient(circle, rgba(var(--accent-rgb), 0.15) 0%, rgba(255, 255, 255, 0) 70%);
+}
+
+.glowBottomLeft {
+  bottom: -100px;
+  left: -100px;
+  width: 500px;
+  height: 500px;
+  background: radial-gradient(circle, rgba(var(--accent-rgb), 0.18) 0%, rgba(255, 255, 255, 0) 70%);
+}
+
+/* Header */
+.heroHeader {
+  position: relative;
+  z-index: 10;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 1rem;
+  padding: 1.75rem 3.5rem;
+  max-width: 1600px;
+  margin: 0 auto;
+}
+
+/* The giant title rises behind this row, so both header pills get the same
+   frosted treatment as the tech dock — without it the black type swallows
+   them. Delete the background/blur/border/padding/shadow lines here and in
+   .heroSocials to go back to bare text. */
+.availBadge {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-size: 0.9rem;
+  font-weight: 500;
+  color: #333333;
+  background: rgba(255, 255, 255, 0.85);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border: 1px solid rgba(0, 0, 0, 0.06);
+  padding: 0.45rem 0.9rem;
+  border-radius: var(--radius-full);
+  box-shadow: 0 6px 22px rgba(0, 0, 0, 0.06);
+}
+
+.statusDot {
+  width: 8px;
+  height: 8px;
+  flex-shrink: 0;
+  border-radius: 50%;
+  background: var(--accent);
+  box-shadow: 0 0 10px rgba(var(--accent-rgb), 0.6);
+  animation: pulseDot 2s infinite ease-in-out;
+}
+
+@keyframes pulseDot {
+  0%,
+  100% {
+    transform: scale(1);
+    opacity: 1;
+  }
+  50% {
+    transform: scale(1.3);
+    opacity: 0.7;
+  }
+}
+
+.heroSocials {
+  display: flex;
+  align-items: center;
+  gap: 1.1rem;
+  background: rgba(255, 255, 255, 0.85);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border: 1px solid rgba(0, 0, 0, 0.06);
+  padding: 0.55rem 1rem;
+  border-radius: var(--radius-full);
+  box-shadow: 0 6px 22px rgba(0, 0, 0, 0.06);
+}
+
+.heroSocials a {
+  color: #1a1a1a;
+  transition: transform 0.2s ease, color 0.2s ease;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.heroSocials a:hover {
+  color: var(--accent);
+  transform: translateY(-2px);
+}
+
+/* Vertical left rail */
+.heroLeftRail {
+  position: absolute;
+  left: 2rem;
+  top: 50%;
+  transform: translateY(-50%);
+  z-index: 10;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.85rem;
+  user-select: none;
+  pointer-events: none;
+}
+
+/* The animated vertical line segments */
+.railLine {
+  width: 1.5px;
+  height: 60px;
+  position: relative;
+  overflow: hidden;
+  background: rgba(0, 0, 0, 0.08);
+  border-radius: 2px;
+  flex-shrink: 0;
+}
+
+.railLine::after {
+  content: '';
+  position: absolute;
+  top: -100%;
+  left: 0;
+  width: 100%;
+  height: 50%;
+  background: linear-gradient(
+    to bottom,
+    transparent 0%,
+    var(--accent) 40%,
+    var(--accent) 60%,
+    transparent 100%
+  );
+  animation: railSlide 2.2s ease-in-out infinite;
+  border-radius: 2px;
+}
+
+/* Stagger the bottom line so it feels connected */
+.railLine:last-child::after {
+  animation-delay: 1.1s;
+}
+
+@keyframes railSlide {
+  0%   { top: -100%; opacity: 0; }
+  15%  { opacity: 1; }
+  85%  { opacity: 1; }
+  100% { top: 200%; opacity: 0; }
+}
+
+/* Each label row */
+.railItem {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.4rem;
+}
+
+.railDot {
+  width: 5px;
+  height: 5px;
+  border-radius: 50%;
+  background: var(--accent);
+  box-shadow: 0 0 8px rgba(255, 20, 147, 0.6);
+  animation: dotPulse 2.2s ease-in-out infinite;
+  flex-shrink: 0;
+}
+
+/* Stagger each dot's pulse so they feel alive */
+.railItem:nth-child(2) .railDot { animation-delay: 0s; }
+.railItem:nth-child(3) .railDot { animation-delay: 0.4s; }
+.railItem:nth-child(4) .railDot { animation-delay: 0.8s; }
+
+@keyframes dotPulse {
+  0%, 100% { transform: scale(1);   opacity: 0.5; }
+  50%       { transform: scale(1.5); opacity: 1;   box-shadow: 0 0 12px rgba(255, 20, 147, 0.9); }
+}
+
+.railText {
+  writing-mode: vertical-rl;
+  transform: rotate(180deg);
+  font-size: 0.62rem;
+  font-weight: 700;
+  letter-spacing: 0.3em;
+  color: #1a1a1a;
+  opacity: 0.55;
+  transition: opacity 0.3s ease, color 0.3s ease;
+}
+
+.railItem:hover .railText {
+  opacity: 1;
+  color: var(--accent);
+}
+
+/* Main band */
+.coverBand {
+  position: relative;
+  z-index: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-start;
+  width: 100%;
+  max-width: 1600px;
+  margin: 0 auto;
+  padding: 60px 2rem 4rem; /* Reduced from 115px to shift all sections up */
+}
+
+/* Giant title + script overlay */
+.heroTitleArea {
+  position: relative;
+  width: 100%;
+  display: flex;
+  justify-content: center;
+}
+
+.coverGiant {
+  font-family: var(--font-victory);
+  font-weight: 800;
+  text-transform: uppercase;
+  color: #0c0c0c;
+  -webkit-text-fill-color: #0c0c0c;
+  line-height: 0.82;
+  letter-spacing: 0.015em;
+  font-size: clamp(6.5rem, 24vw, 27rem);
+  white-space: nowrap;
+  margin: 0;
+  padding-top: 0.5rem;
+  z-index: 1;
+  text-align: center;
+  pointer-events: none;
+  user-select: none;
+}
+
+.shiningO {
+  display: inline;
+  font-size: 0.92em;
+  vertical-align: 0.01em;
+  background: linear-gradient(110deg, #0c0c0c 35%, #ffffff 50%, #0c0c0c 65%);
+  background-size: 250% auto;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  animation: metallicShine 3.5s linear infinite;
+}
+
+@keyframes metallicShine {
+  0% {
+    background-position: -125% center;
+  }
+  100% {
+    background-position: 125% center;
+  }
+}
+
+.pLetterBox {
+  position: relative;
+  display: inline-block;
+}
+
+.scriptOverlay {
+  position: absolute;
+  left: -15%;
+  bottom: 2%;
+  z-index: 3;
+  font-family: var(--font-script);
+  font-size: clamp(1.6rem, 3.8vw, 3.5rem);
+  line-height: 0.92;
+  font-weight: 700;
+  pointer-events: none;
+  white-space: nowrap;
+  text-transform: none;
+  letter-spacing: normal;
+
+  /* Anime-title treatment: a hot pink-to-amber gradient fill (reusing the
+     site's existing accent + amber tokens) with a crisp white outline, like
+     a title card, instead of a flat halo'd colour. -webkit-text-fill-color
+     must be set explicitly — .coverGiant sets its own further up the tree
+     and it inherits, which would otherwise paint over the gradient clip. */
+  background: linear-gradient(135deg, var(--accent) 0%, var(--amber) 100%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+  -webkit-text-fill-color: transparent;
+  -webkit-text-stroke: 1.4px #ffffff;
+  text-shadow: 3px 3px 0 rgba(139, 0, 54, 0.35);
+
+  /* Snappy pop-in instead of a static reveal, settling into the original
+     -10deg tilt. Disabled below for prefers-reduced-motion. */
+  animation: scriptPop 0.65s cubic-bezier(0.34, 1.56, 0.64, 1) both;
+  animation-delay: 0.1s;
+}
+
+@keyframes scriptPop {
+  0% {
+    opacity: 0;
+    transform: rotate(-22deg) scale(0.7);
+  }
+  65% {
+    opacity: 1;
+    transform: rotate(-6deg) scale(1.08);
+  }
+  100% {
+    opacity: 1;
+    transform: rotate(-10deg) scale(1);
+  }
+}
+
+.scriptUnderline {
+  width: clamp(100px, 14vw, 170px);
+  height: auto;
+  display: block;
+  margin-top: 0.2rem;
+  /* scriptOverlay's own `color` is transparent (needed for the gradient
+     text clip), so the underline's stroke="currentColor" is given its own
+     color here rather than inheriting that. */
+  color: var(--accent-strong);
+}
+
+.scriptUnderline path {
+  stroke-dasharray: 1;
+  stroke-dashoffset: 1;
+  animation: drawUnderlineLoop 2.5s cubic-bezier(0.4, 0, 0.2, 1) infinite;
+  /* Optional: Wait just a bit before the first loop starts so text can pop */
+  animation-delay: 0.2s;
+}
+
+@keyframes drawUnderlineLoop {
+  0% {
+    stroke-dashoffset: 1;
+  }
+  30% {
+    stroke-dashoffset: 0;
+  }
+  70% {
+    stroke-dashoffset: 0;
+  }
+  100% {
+    stroke-dashoffset: -1;
+  }
+}
+
+/* Right hero cutout */
+.heroImgWrapper {
+  display: none; /* Temporarily hidden until requested to show */
+  position: absolute;
+  right: clamp(0rem, 4vw, 5rem);
+  /* Shifted down further to decrease overlap on the title */
+  top: clamp(1.5rem, 3vw, 6.0rem);
+  z-index: 2;
+  justify-content: flex-end;
+  align-items: center;
+  pointer-events: none;
+}
+
+.heroImgContainer {
+  --hero-fade: radial-gradient(
+    75% 62% at 55% 18%,
+    #000 0%,
+    #000 55%,
+    rgba(0, 0, 0, 0.5) 78%,
+    transparent 100%
+  );
+  position: relative;
+  display: block;
+  width: clamp(360px, 45vw, 780px); /* Reduced from clamp(440px, 55vw, 980px) */
+  overflow: hidden;
+}
+
+.heroImg {
+  width: 100%;
+  height: auto;
+  /* Matches hero-image-2.png (1036x1176), so the box is reserved at the right
+     shape before the file lands — a wrong ratio here reflows on load. */
+  aspect-ratio: 1036 / 1176;
+  object-fit: contain;
+  display: block;
+  /* The artwork runs off its own canvas on the left, right and bottom (the
+     forearm is cut dead straight at x=0 from 58% height down), so the cutout
+     would end in hard lines. This mask is anchored on the face — fully opaque
+     out to 55% of its radius, so the head stays crisp — and dissolves every
+     cut edge. A mask fades the image itself, unlike a white overlay, which
+     would also wash the giant title sitting behind it. */
+  -webkit-mask-image: var(--hero-fade);
+  mask-image: var(--hero-fade);
+  user-select: none;
+  -webkit-user-select: none;
+  -webkit-user-drag: none;
+  -webkit-touch-callout: none;
+  pointer-events: none;
+}
+
+/* ─── Poster intro ─────────────────────────────────────────── */
+.posterIntro {
+  position: relative;
+  z-index: 4;
+  width: 100%;
+  max-width: 900px;
+  padding: 0 1.5rem;
+  margin-top: clamp(1.5rem, 5vw, 4.5rem); /* Reduced from clamp(5rem, 14vw, 12rem) to move intro and sections up */
+  text-align: center;
+  color: #000000;
+}
+
+/* ── Eyebrow ── */
+.eyebrow {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.75rem;
+  margin-bottom: 0px; /* Removed margin to pull name closer */
+  background: transparent;
+  border: none;
+  padding: 0;
+  animation: fadeSlideUp 0.6s ease both;
+  box-shadow: none;
+}
+
+.eyebrowLine {
+  display: none;
+}
+
+.eyebrowText {
+  font-size: clamp(0.85rem, 1.4vw, 1.05rem);
+  font-weight: 700;
+  letter-spacing: 0.3em;
+  color: #000000; /* Back to black text for visibility */
+  text-transform: uppercase;
+}
+
+/* Animated dot inside eyebrow */
+.eyebrow::before {
+  content: '';
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: #000000; /* Back to black dot */
+  box-shadow: 0 0 4px rgba(0, 0, 0, 0.2);
+  animation: dotPulse 1.8s ease-in-out infinite;
+  flex-shrink: 0;
+}
+
+/* ── Name headline ── */
+.nameContainer {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 1.5rem;
+  margin: 0.75rem auto 1rem;
+  width: 100%;
+  max-width: 1000px;
+  animation: fadeSlideUp 0.7s 0.1s ease both;
+}
+
+.posterHeadlineWarp {
+  flex: 0 0 500px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: relative;
+  overflow: visible;
+}
+
+.inlinePhotoWrap {
+  width: 140px;
+  height: 140px;
+  transform: rotate(5deg);
+  transition: transform 0.3s cubic-bezier(0.2, 0.8, 0.2, 1);
+  margin-top: 5px;
+  margin-left: -3.5rem;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.inlinePhotoWrap:hover {
+  transform: rotate(-5deg) scale(1.15);
+}
+
+.inlinePhoto {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+}
+
+@keyframes fadeSlideUp {
+  from { opacity: 0; transform: translateY(20px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+/* Role Capsule Row */
+.roleRow {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-top: 1.5rem; /* Moves the block down away from the name */
+  margin-bottom: 2rem; /* Reduced to bring body copy up slightly */
+  animation: fadeSlideUp 0.7s 0.2s ease both;
+}
+
+.roleCapsule {
+  display: inline-flex;
+  align-items: center;
+  gap: 1.75rem;
+  background: transparent;
+  color: #1a1a1a;
+  padding: 0.25rem 0;
+  transition: all 0.3s ease;
+}
+
+.roleText {
+  font-size: clamp(0.72rem, 1.3vw, 0.82rem);
+  font-weight: 600;
+  letter-spacing: 0.24em;
+  text-transform: uppercase;
+  white-space: nowrap;
+  opacity: 0.8;
+  transition: all 0.3s ease;
+}
+
+.roleCapsule:hover .roleText {
+  opacity: 1;
+  color: #000000;
+  text-shadow: 0 0 1px rgba(0,0,0,0.1);
+}
+
+.roleDivider {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: var(--accent); /* Tiny touch of pink accent dot in the center of pure black/white theme */
+  box-shadow: 0 0 10px rgba(255, 20, 147, 0.6);
+  animation: dotPulse 2s ease-in-out infinite;
+  transition: transform 0.3s ease;
+}
+
+.roleCapsule:hover .roleDivider {
+  transform: scale(1.3);
+  box-shadow: 0 0 14px rgba(255, 20, 147, 0.9);
+}
+
+/* ── Body copy ── */
+.posterBody {
+  font-size: clamp(1.35rem, 2.4vw, 1.85rem);
+  font-weight: 400;
+  line-height: 1.6;
+  max-width: 1050px;
+  margin: 0 auto 3rem;
+  color: #333333;
+  letter-spacing: 0.01em;
+  animation: fadeSlideUp 0.7s 0.3s ease both;
+}
+
+@media (max-width: 639px) {
+  .desktopBr {
+    display: none;
+  }
+}
+
+.posterBody strong {
+  font-weight: 700;
+  color: #000000;
+}
+
+/* ─── Premium Light-themed TrueFocus Banner ─────────────────── */
+.trueFocusBanner {
+  position: relative;
+  margin: 0 auto 3.8rem; /* Reduced to bring lower sections up slightly */
+  max-width: 700px;
+  width: 100%;
+  background: rgba(255, 255, 255, 0.7);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border-radius: 4%;
+  padding: 2.5rem 3rem 2.25rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0;
+  overflow: hidden;
+  animation: fadeSlideUp 0.8s 0.4s ease both;
+  border: 1px solid rgba(0, 0, 0, 0.08);
+  box-shadow:
+    0 4px 30px rgba(0, 0, 0, 0.02),
+    0 30px 60px rgba(0, 0, 0, 0.05);
+}
+
+/* Moving very soft grey light-glow behind the words */
+.trueFocusBanner::before {
+  content: '';
+  position: absolute;
+  top: -60px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 80%;
+  height: 220px;
+  background: radial-gradient(
+    ellipse at center,
+    rgba(0, 0, 0, 0.03) 0%,
+    rgba(0, 0, 0, 0.01) 50%,
+    transparent 70%
+  );
+  animation: auroraFloat 4s ease-in-out infinite alternate;
+  pointer-events: none;
+  z-index: 0;
+}
+
+/* Micro-fine dot matrix pattern overlay */
+.trueFocusBanner::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background-image: radial-gradient(rgba(0, 0, 0, 0.03) 1px, transparent 1px);
+  background-size: 8px 8px;
+  border-radius: 4%;
+  pointer-events: none;
+  z-index: 0;
+}
+
+@keyframes auroraFloat {
+  0%   { transform: translateX(-50%) translateY(0px) scale(1); opacity: 0.8; }
+  100% { transform: translateX(-50%) translateY(12px) scale(1.1); opacity: 1; }
+}
+
+.bannerEyebrow {
+  position: relative;
+  z-index: 1;
+  font-size: 0.62rem;
+  font-weight: 700;
+  letter-spacing: 0.32em;
+  text-transform: uppercase;
+  color: rgba(0, 0, 0, 0.4);
+  margin: 0 0 1rem;
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+}
+
+.bannerEyebrow::before,
+.bannerEyebrow::after {
+  content: '';
+  height: 1px;
+  width: 28px;
+  background: linear-gradient(90deg, transparent, rgba(0, 0, 0, 0.15), transparent);
+}
+
+.bannerFootnote {
+  position: relative;
+  z-index: 1;
+  font-size: 0.62rem;
+  font-weight: 700;
+  letter-spacing: 0.32em;
+  text-transform: uppercase;
+  color: rgba(0, 0, 0, 0.4);
+  margin: 1rem 0 0;
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+}
+
+.bannerFootnote::before,
+.bannerFootnote::after {
+  content: '';
+  height: 1px;
+  width: 28px;
+  background: linear-gradient(90deg, transparent, rgba(0, 0, 0, 0.15), transparent);
+}
+
+/* Override TrueFocus words inside light banner */
+.trueFocusBanner :global(.focus-word) {
+  font-size: clamp(1.6rem, 4vw, 2.6rem) !important;
+  font-weight: 900;
+  color: #000000;
+  letter-spacing: -0.03em;
+  position: relative;
+  z-index: 1;
+}
+
+.trueFocusBanner :global(.focus-container) {
+  gap: 1.8em;
+  padding: 0.25rem 0;
+  position: relative;
+  z-index: 1;
+}
+
+/* Black corner accent marks */
+.trueFocusBanner :global(.corner) {
+  border-color: #000000 !important;
+  box-shadow: 0 0 4px rgba(0, 0, 0, 0.1), 0 0 1px rgba(0, 0, 0, 0.3) !important;
+}
+
+
+/* Bottom controls */
+.heroBottomBar {
+  position: relative;
+  z-index: 5;
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-end;
+  width: 100%;
+  max-width: 1440px;
+  margin-top: clamp(3rem, 7vw, 5.5rem);
+  gap: 2rem;
+  padding: 0 1rem;
+}
+
+.techDock {
+  display: flex;
+  align-items: center;
+  gap: clamp(0.75rem, 1.8vw, 1.75rem);
+  background: rgba(255, 255, 255, 0.88);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border: 1px solid rgba(0, 0, 0, 0.07);
+  padding: 0.85rem 1.6rem;
+  border-radius: 20px;
+  box-shadow: 0 10px 35px rgba(0, 0, 0, 0.05);
+  overflow-x: auto;
+  overscroll-behavior-x: contain;
+  scrollbar-width: none;
+  max-width: 100%;
+}
+
+.techDock::-webkit-scrollbar {
+  display: none;
+}
+
+.dockItem {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.4rem;
+  font-size: 0.74rem;
+  font-weight: 600;
+  color: #333333;
+  white-space: nowrap;
+  transition: transform 0.2s ease;
+  cursor: default;
+}
+
+.dockItem:hover {
+  transform: translateY(-3px);
+}
+
+.adobeBadge {
+  width: 22px;
+  height: 22px;
+  border-radius: 4px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 800;
+  font-size: 0.72rem;
+  line-height: 1;
+  color: #ffffff;
+}
+
+.psBadge {
+  background: #001e36;
+  color: #31a8ff;
+  border: 1px solid #31a8ff;
+}
+
+.aiBadge {
+  background: #330000;
+  color: #ff9a00;
+  border: 1px solid #ff9a00;
+}
+
+/* Bottom right contact widget */
+.heroContactBox {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: 1rem;
+  flex-shrink: 0;
+}
+
+.ctaButton {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.75rem;
+  background: linear-gradient(135deg, var(--accent) 0%, var(--accent-strong) 100%);
+  color: #ffffff;
+  font-weight: 700;
+  font-size: 0.95rem;
+  padding: 0.8rem 1.6rem;
+  border-radius: 9999px;
+  box-shadow: 0 8px 25px rgba(var(--accent-rgb), 0.4);
+  transition: transform 0.25s ease, box-shadow 0.25s ease;
+  text-decoration: none;
+}
+
+.ctaButton:hover {
+  transform: translateY(-2px) scale(1.02);
+  box-shadow: 0 12px 30px rgba(var(--accent-rgb), 0.55);
+}
+
+.btnArrow {
+  width: 26px;
+  height: 26px;
+  flex-shrink: 0;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.25);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #ffffff;
+}
+
+.contactDetails {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: 0.35rem;
+  font-size: 0.88rem;
+  color: #2b2b2b;
+}
+
+.detailItem {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.45rem;
+  font-weight: 600;
+}
+
+.detailEmail {
+  color: #2b2b2b;
+  transition: color 0.2s ease;
+  text-decoration: none;
+}
+
+.detailEmail:hover {
+  color: var(--accent);
+}
+
+/* Responsive */
+@media (max-width: 1120px) {
+  .heroLeftRail {
+    display: none;
+  }
+  .heroHeader {
+    padding: 1.5rem 2rem;
+  }
+  .heroBottomBar {
+    flex-direction: column;
+    align-items: center;
+    gap: 2rem;
+  }
+  .heroContactBox {
+    align-items: center;
+  }
+  .contactDetails {
+    align-items: center;
+  }
+  .scriptOverlay {
+    left: 1.5rem;
+  }
+}
+
+@media (max-width: 768px) {
+  .heroHeader {
+    padding: 1.25rem 1.25rem;
+  }
+  .coverGiant {
+    font-size: clamp(3.8rem, 22vw, 10rem);
+  }
+  .scriptOverlay {
+    font-size: 2rem;
+    left: 1rem;
+    bottom: 2rem;
+  }
+  .heroImgWrapper {
+    position: relative;
+    right: auto;
+    top: auto;
+    width: 100%;
+    justify-content: center;
+    margin-top: 1rem;
+  }
+  .heroImgContainer {
+    width: clamp(260px, 75vw, 480px); /* Reduced from clamp(320px, 85vw, 600px) */
+  }
+  .posterIntro {
+    margin-top: -3rem;
+  }
+  .techDock {
+    padding: 0.6rem 1rem;
+    gap: 1rem;
+    justify-content: flex-start;
+  }
+  .coverBand {
+    padding: 0 1rem 3rem;
+  }
+  .heroLayout {
+    flex-direction: column;
+    padding: 1rem 1rem 6rem;
+  }
+  .imageColumn {
+    padding-top: 1rem;
+    padding-bottom: 2rem;
+  }
+  .posterHeadlineWarp {
+    flex: 0 0 350px;
+  }
+  .inlinePhotoWrap {
+    width: 90px;
+    height: 50px;
+  }
+  .nameContainer {
+    gap: 1rem;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .statusDot {
+    animation: none;
+  }
+  .scriptOverlay {
+    animation: none;
+  }
+  .heroTitle, .heroSubtitle, .heroDesc {
+    animation: none !important;
+    opacity: 1 !important;
+    transform: none !important;
+  }
+}
